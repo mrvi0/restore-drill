@@ -16,17 +16,25 @@ Run it from cron; it exits `0` on PASS and `1` on FAIL.
 
 ## Install
 
+As a command-line tool, with [pipx](https://pipx.pypa.io) or [uv](https://docs.astral.sh/uv/)
+(both install it into an isolated environment and put `restore-check` on your PATH):
+
 ```bash
-pipx install git+https://github.com/<you>/restore-drill
+pipx install git+https://github.com/mrvi0/restore-drill
+# or
+uv tool install git+https://github.com/mrvi0/restore-drill
 ```
 
-or use the Docker image (it talks to the host Docker daemon):
+Or as a Docker image. It starts the sandbox containers through the host Docker daemon,
+so it needs the Docker socket:
 
 ```bash
-docker build -t restore-check .
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /var/backups/pg:/backups:ro restore-check run --source /backups
+  -v /var/backups/pg:/backups:ro \
+  ghcr.io/mrvi0/restore-drill run --source /backups --pg-version 16
 ```
+
+For S3, pass credentials as environment variables (`-e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY ...`).
 
 ## Usage
 
@@ -92,3 +100,6 @@ uv sync
 uv run pytest -m "not docker"   # unit tests
 uv run pytest -m docker         # real restores, needs Docker
 ```
+
+Releases: push a `vX.Y.Z` tag and GitHub Actions publishes the image to
+`ghcr.io/mrvi0/restore-drill` (`X.Y.Z`, `X.Y` and `latest` tags, amd64 + arm64).
