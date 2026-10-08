@@ -31,8 +31,10 @@ so it needs the Docker socket:
 ```bash
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
   -v /var/backups/pg:/backups:ro \
-  ghcr.io/mrvi0/restore-drill run --source /backups --pg-version 16
+  mrvi0/restore-drill run --source /backups --pg-version 16
 ```
+
+The same image is published to Docker Hub (`mrvi0/restore-drill`) and GHCR (`ghcr.io/mrvi0/restore-drill`).
 
 For S3, pass credentials as environment variables (`-e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY ...`).
 
@@ -101,5 +103,6 @@ uv run pytest -m "not docker"   # unit tests
 uv run pytest -m docker         # real restores, needs Docker
 ```
 
-Releases: push a `vX.Y.Z` tag and GitHub Actions publishes the image to
-`ghcr.io/mrvi0/restore-drill` (`X.Y.Z`, `X.Y` and `latest` tags, amd64 + arm64).
+Releases: push a `vX.Y.Z` tag and GitHub Actions publishes the image to Docker Hub
+(`mrvi0/restore-drill`) and GHCR (`ghcr.io/mrvi0/restore-drill`) with `X.Y.Z`, `X.Y` and
+`latest` tags, for amd64 and arm64.
