@@ -62,6 +62,16 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # Keeps the Docker Hub page in sync with README on every master push, not only on releases.
+  # Needs a Docker Hub token with Read, Write, Delete scope; a failure here never fails CI.
+  dockerhub-readme:
+    needs: test
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
       - uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
