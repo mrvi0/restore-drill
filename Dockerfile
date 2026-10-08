@@ -1,7 +1,12 @@
 FROM python:3.12-slim
 
+LABEL org.opencontainers.image.title="restore-drill" \
+      org.opencontainers.image.description="Restore your latest Postgres backup in a throwaway container and check the data is really there" \
+      org.opencontainers.image.source="https://github.com/mrvi0/restore-drill" \
+      org.opencontainers.image.licenses="Apache-2.0"
+
 WORKDIR /app
-COPY pyproject.toml README.md ./
+COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
 RUN pip install --no-cache-dir .
 

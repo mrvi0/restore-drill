@@ -1,15 +1,22 @@
 [project]
 name = "restore-drill"
-version = "0.1.0"
+version = "0.1.1"
 description = "Restore your latest Postgres backup in a throwaway Docker container and check the data is really there."
 readme = "README.md"
+keywords = ["postgres", "postgresql", "backup", "restore", "disaster-recovery", "pg_dump", "docker"]
 requires-python = ">=3.12"
-license = "MIT"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 dependencies = [
     "typer>=0.12",
     "docker>=7.1",
     "boto3>=1.34",
 ]
+
+[project.urls]
+Homepage = "https://restore-drill.b4dcat.tech"
+Source = "https://github.com/mrvi0/restore-drill"
+Issues = "https://github.com/mrvi0/restore-drill/issues"
 
 [project.scripts]
 restore-check = "restore_drill.cli:app"
