@@ -3,7 +3,7 @@ import json
 import pytest
 from typer.testing import CliRunner
 
-from restore_drill import cli
+from restore_drill import __version__, cli
 from restore_drill.report import Report
 
 runner = CliRunner()
@@ -91,4 +91,15 @@ def test_telegram_failure_does_not_change_exit_code(fake_drill, monkeypatch):
 
 def test_version():
     res = runner.invoke(cli.app, ["--version"])
-    assert res.exit_code == 0 and res.output.strip() == "0.1.0"
+    assert res.exit_code == 0 and res.output.strip() == __version__
+
+
+def test_help_mentions_early_access_once():
+    res = runner.invoke(cli.app, ["--help"])
+    assert res.exit_code == 0
+    assert cli.EARLY_ACCESS_URL in res.output
+
+
+def test_run_output_has_no_marketing(fake_drill):
+    res = runner.invoke(cli.app, ["run", "--source", "/b"])
+    assert "early-access" not in res.output

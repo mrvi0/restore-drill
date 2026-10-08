@@ -12,7 +12,13 @@ from .drill import DrillConfig, run_drill
 from .notify import send_telegram, telegram_text
 from .report import render_human
 
-app = typer.Typer(add_completion=False, help="Check that your latest Postgres backup actually restores.")
+EARLY_ACCESS_URL = "https://restore-drill.b4dcat.tech/#early-access"
+
+app = typer.Typer(
+    add_completion=False,
+    help="Check that your latest Postgres backup actually restores.",
+    epilog=f"Missed-run alerts, restore history and audit reports (cloud, planned): {EARLY_ACCESS_URL}",
+)
 
 
 def _version(value: bool) -> None:
