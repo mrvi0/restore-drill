@@ -48,7 +48,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository }}
-            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/restore-drill
+            docker.io/mrvi0/restore-drill
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -76,6 +76,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ secrets.DOCKERHUB_USERNAME }}/restore-drill
+          repository: mrvi0/restore-drill
           short-description: "Restore your latest Postgres backup in a throwaway container and check the data is really there"
           readme-filepath: ./README.md
